@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 import time
+import csv
+
 headers = {
     'accept': '*/*',
     'user-agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.380'
@@ -22,10 +24,15 @@ def parse_page_links(base_url, headers):
 
 def parse_pages(base_url, headers):
     links = []
+    f = open('movie_links.txt', 'r+')
+    
     for i in range(1,148):
         page_links = parse_page_links(base_url+"/page/"+str(i)+"/", headers)
-        links.append(page_links)
+        for line in page_links:
+            f.write(line+"\n")
+
         time.sleep(0.3)
+    f.close()
     return links
 
 def parse_movie_page(base_url, headers):
@@ -65,8 +72,26 @@ def parse_movie_page(base_url, headers):
 
     image='https://rezka.ag'+soup.find('img',attrs={'itemprop':'image'})['src']
 
-    print(title, rating, date,director,"|".join(genres),"||".join(actors),dede,image)
+    return [title, rating, date,director,"|".join(genres),"||".join(actors),dede,image]
+    
+# parse_movie_page('http://rezka.ag/series/drama/13729-podvodnaya-lodka.html', headers)
+# parse_pages(base_url, headers)
 
-parse_movie_page('http://rezka.ag/series/drama/13729-podvodnaya-lodka.html', headers)
-# print(parse_pages(base_url, headers))
-
+def parse_movie_page_and_write_to_file():
+    f = open('movie_links.txt', 'r')
+    movies = open('page_movies.csv','r+', encoding='utf-8')
+    writer = csv.writer(movies)
+    counter = 1
+    for link in f:
+        print(counter)
+        counter+=1
+        try:
+            movie_data = parse_movie_page(link.replace('\n', ''),headers)
+            writer.writerow(movie_data)
+        except:
+            continue
+        
+    f.close()
+    movies.close()
+parse_movie_page_and_write_to_file()
+# parse_movie_page('https://rezka.ag/series/drama/16722-v-ozhidanii-solnca.html', headers)
