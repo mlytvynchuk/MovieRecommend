@@ -1,0 +1,15 @@
+body{
+    background: rgb(27, 27, 27);
+}
+.movie-name{
+    font-size: 30px;
+    color: #fff;
+
+}
+.movie-description{
+    font-size: 15px;
+    color: #fff;
+}
+.movie-alldescription{
+    
+}
