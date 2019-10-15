@@ -72,13 +72,15 @@ def parse_movie_page(base_url, headers):
 
     image='https://rezka.ag'+soup.find('img',attrs={'itemprop':'image'})['src']
 
-    return [title, rating, date,director,"|".join(genres),"||".join(actors),dede,image]
-    
+    return [title, rating, date,director," ".join(genres)," ".join(actors),dede,image]
+
+
 # parse_movie_page('http://rezka.ag/series/drama/13729-podvodnaya-lodka.html', headers)
 # parse_pages(base_url, headers)
 
 def parse_movie_page_and_write_to_file():
-    f = open('movie_links.txt', 'r')
+    # not_parsed = open('not_parsed.txt', 'w+')
+    f = open('not_parsed.txt', 'r')
     movies = open('page_movies.csv','r+', encoding='utf-8')
     writer = csv.writer(movies)
     counter = 1
@@ -86,12 +88,60 @@ def parse_movie_page_and_write_to_file():
         print(counter)
         counter+=1
         try:
-            movie_data = parse_movie_page(link.replace('\n', ''),headers)
-            writer.writerow(movie_data)
+            movie_data = parse_other_movie_page(link.replace('\n', ''),headers)
+            if movie_data:
+                writer.writerow(movie_data)
+            time.sleep(1)
         except:
-            continue
-        
+            # not_parsed.write(link)
+            pass
+
+    # not_parsed.close()
     f.close()
     movies.close()
-parse_movie_page_and_write_to_file()
-# parse_movie_page('https://rezka.ag/series/drama/16722-v-ozhidanii-solnca.html', headers)
+
+# parse_movie_page_and_write_to_file()
+
+# parse_movie_page('https://rezka.ag/series/comedy/1733-druzya-1994.html', headers)
+
+def parse_other_movie_page(base_url, headers):
+    session = requests.Session()
+    request = session.get(base_url, headers=headers)
+    soup = BeautifulSoup(request.content, 'html.parser')
+
+    title = soup.find('h1', attrs={'itemprop': 'name'}).text
+
+    rating_span = soup.find('span', attrs={'class': 'b-post__info_rates imdb'})
+    rating = rating_span.find('span', attrs={'class': 'bold'}).text
+    info_block = soup.find('table',attrs={'class':'b-post__info'})
+    
+    info_block_data=info_block.find_all('tr')
+    info_date_block = info_block_data[1]
+    date = info_date_block.find('a').text.split(' ')[0]
+
+    info_director_block =info_block_data[3]
+    director = info_director_block.find('span',attrs ={'itemprop': 'name'}).text
+
+    info_category_block =info_block_data[4]
+    info_category_block = info_category_block.find_all('td')[1]
+   
+    genres_block=info_category_block.find_all('span',attrs ={'itemprop':'genre'})
+    genres = []
+    for genre in genres_block:
+        genres.append(genre.text)
+
+    info_actors_block=info_block_data[9]
+    info_actors_block=info_actors_block.find('div',attrs={'class':'persons-list-holder'})  
+    actor_block=info_actors_block.find_all('span',attrs={'class':'item'})[:-1]  
+    actors=[]
+    for actor in actor_block:
+        actors.append(actor.text.replace(',',''))
+
+    dede=soup.find('div',attrs={'class':'b-post__description_text'}).text
+
+    image='https://rezka.ag'+soup.find('img',attrs={'itemprop':'image'})['src']
+    print(title, rating, date,director," ".join(genres)," ".join(actors),dede,image)
+    return [title, rating, date,director," ".join(genres)," ".join(actors),dede,image]
+w = open('page_movies.csv', 'r+',encoding='utf-8')
+wr = csv.writer(w)
+wr.writerow(parse_other_movie_page('https://rezka.ag/series/drama/20476-edinstvennyy-rebenok.html', headers))

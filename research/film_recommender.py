@@ -2,7 +2,9 @@ import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import time 
 
+begin = time.time()
 df = pd.read_csv("/Users/max22111/mydev/MovieRecommend/research/movie_data.csv")
 features = ['keywords', 'cast', 'genres', 'director']
 
@@ -15,14 +17,12 @@ for feature in features:
 df["combined_features"] = df.apply(combine_features,axis=1)
 
 
-
-
-
 def get_title_from_index(index):
     try:
         return df[df.index == index]['title'].values[0]
     except:
         return "Movie is not found"
+
 
 def get_index_from_title(title):
     try:
@@ -30,7 +30,6 @@ def get_index_from_title(title):
     except:
         print(title,"is not found in data base")
         return None
-
 
 
 cv = CountVectorizer()
@@ -53,3 +52,7 @@ def find_simulars(movie_user_likes):
             if i>=5:
                 break
     return titles
+
+find_simulars("Cars 2")
+endtime = time.time() - begin
+print(endtime)
