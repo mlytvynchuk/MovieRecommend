@@ -3,13 +3,42 @@ body{
 }
 .movie-name{
     font-size: 30px;
-    color: #fff;
+    /* color: #fff; */
 
 }
 .movie-description{
+    padding-left: 10px;
     font-size: 15px;
-    color: #fff;
+    /* color: #fff; */
 }
 .movie-alldescription{
+    display: flex;
+}
+.movie-tags{
+    list-style-type: none;
+    padding-left: 0;
+}
+.movie-data{
+    padding-top:20px;
+    align-items: center;
+}
+.container{
+    padding: 30px;
+}
+#movie-img{
+    width: 200px;
+}
+@media(max-width: 500px){
+    .movie-alldescription{
+        flex-direction: column;
+        align-items: center;
+
+    }
+        .movie-wrapper{
+            justify-content: center;
+        }
+        .simular-movies > h4, .movie-data > h4 {
+            text-align: center;
+        }
     
 }

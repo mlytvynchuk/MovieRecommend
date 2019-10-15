@@ -4,6 +4,7 @@
     
     flex-wrap: wrap;
     
+    
 }
 .movie-box{
     margin: 5px;
@@ -28,3 +29,12 @@ body{
 .movie-section{
     padding-top:25px;
 }
+@media(max-width: 400px){
+    .movie-wrapper{
+        justify-content: center;
+    }
+    .section-title{
+        text-align: center;
+    }
+}
+
