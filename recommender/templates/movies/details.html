@@ -1,90 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/details.css">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Document</title>
-</head>
-<body>
-        
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand" href="#">MovieRecommend</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-              
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                      <a class="nav-link" href="#">Фільми <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#">Мій список</a>
-                    </li>
-                              </ul>
-                  <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                    
-                  </form>
-                </div>
-              </nav>
-              
-             
-
+{% extends "main.html"%}
+{%load static%}
+{%block head%}
+<link rel="stylesheet" href={% static 'css/details.css' %}>
+{% endblock head%}
+{% block content %}
               <div class="container bg-white">
                   <div class="movie-alldescription">
                       <div class="movie-box">
-                          <img id="movie-img" src="img/1.jpg">
+                          <img id="movie-img" src={{movie.image}}>
                       </div>
                       <div class="movie-description">
                           <div  class="movie-name">
-                              <h2>Назва фільму</h2>
+                              <h2>{{movie.title}}</h2>
                             </div>
                               <ul class="movie-tags">
                                   <li class="movie-tag">
                                       <b>Оригінальна назва: </b>
-                                      Назва фільму
+                                      {{movie.original}}
                                     </li>
                                   <li class="movie-tag">
                                       <b>Рейтинг: </b>
-                                      9.5
+                                      {{movie.rating}}
                                     </li>
                                 <li class="movie-tag">
                                   <b>Дата виходу: </b>
-                                  2015
+                                  {{movie.date}}
                                 </li>
                                 <li class="movie-tag">
                                     <b>Жанр: </b>
-                                    Комедія
+                                    {{movie.genre}}
                                   </li>
                                   <li class="movie-tag">
                                       <b>Режисер: </b>
-                                      Джоні Айкос
+                                      {{movie.director}}
                                     </li>
                                     <li class="movie-tag">
                                         <b>Актори: </b>
-                                        Джоні Деп, Анджеліна Джолі
+                                        {{actors | join:", "}}
                                       </li>
                               </ul>
                           </div>
                       </div>
                       <div class="movie-data">
-                        <h4>Про фільм "Назва фільму":</h4>
+                        <h4>Про фільм "{{movie.title}}":</h4>
                           <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit beatae quam omnis aperiam veniam? Iure, maxime. Laborum deleniti sed officia temporibus culpa rem natus, et perspiciatis repellat explicabo porro dicta!
-                            Non eaque, repellat nisi officiis sunt quae quidem commodi quis! Quia obcaecati fuga modi voluptates consectetur sunt tempore? Nihil, quam? Officiis dolores officia modi esse odio asperiores molestias iure consectetur?
-                            Ipsum ullam maxime voluptate numquam ratione ex exercitationem modi repellat! Facilis error perferendis ut, beatae recusandae laudantium, et eveniet, consequatur unde quasi corporis qui dolorum sapiente! Sint corporis dolores tempora?
-                            Unde repellendus reiciendis similique enim fugiat nisi aspernatur, totam repellat pariatur, illo quisquam quia saepe obcaecati dolorem eum! Natus tempore soluta aliquid corporis excepturi adipisci quae aut eum accusantium quas?
-                            Ullam eligendi vel itaque quia accusamus accusantium, error saepe nostrum quas porro optio ratione dignissimos voluptatum pariatur magnam? Rerum saepe exercitationem quasi libero explicabo nesciunt cum eos dolorum impedit velit!
-                            Est veniam ratione veritatis fugit eligendi commodi, delectus placeat dolorem itaque quaerat nulla quis. Corrupti sed sequi et dolorum, illum placeat, dolore tempora debitis blanditiis similique molestiae aliquid totam minus?
-                            Natus, sunt eaque ea fugiat illum omnis eum nobis officiis, possimus, atque quia eos reiciendis voluptates error quasi labore iure quas. Quis, debitis. At fugit repellat nesciunt animi. Ullam, nesciunt?
-                            Laudantium incidunt ex sed, porro aut quo mollitia voluptatem ab et eveniet excepturi tenetur. Ut non quo incidunt maiores officiis ducimus minus. Laboriosam facere suscipit libero, inventore quibusdam tenetur omnis.
-                            Veritatis exercitationem minus mollitia minima, laudantium dolor, animi nesciunt eum laboriosam, dicta enim necessitatibus vitae ullam repudiandae itaque alias delectus eos possimus amet accusantium fugit voluptas laborum quo ipsam! Maiores.
-                            Ex ratione molestias rerum molestiae aliquam eius, accusamus iste id, aspernatur nobis eaque voluptatem cum, maiores quos nesciunt debitis quia veniam eligendi ducimus! Perferendis ullam delectus eaque sequi culpa aliquid.
+                            {{movie.description}}
                           </p>
                         </div>
                 <div class="simular-movies">
@@ -101,9 +61,4 @@
                         </div>
                 </div>
                 </div>
-               
-              <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-</body>
-</html>
+{% endblock content %}
