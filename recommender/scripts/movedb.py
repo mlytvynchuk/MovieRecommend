@@ -1,4 +1,4 @@
-# from movies.models import Movie
+from movies.models import Movie
 import pandas as pd
 
 def move_to_db(filename):
@@ -6,20 +6,34 @@ def move_to_db(filename):
     print(df.head)
     
     for index, row in df.iterrows():
-        
-        title = row['title']
-        original = row['original']
-        genres = str(row['genres']).replace('|', ',')
-        keywords = str(row['keywords']).replace('|', ',')
-        country = str(row['country'])
-        timestamp = row['timestamp']
-        rating=row['rating']
-        director=row['director']
-        image=row['image']
-        actors=str(row['actors']).replace('|', ',')
-        description=row['description']
-        print(actors)
-        if index > 10:
-            break
+        try:
+            title = row['title']
+            original = row['original']
+            genres = str(row['genres']).replace('|', ',')
+            keywords = str(row['keywords']).replace('|', ',')
+            country = str(row['country'])
+            timestamp = row['timestamp']
+            rating=row['rating']
+            director=row['director']
+            image=row['image']
+            actors=str(row['actors']).replace('|', ',')
+            description=row['description']
+            
+            Movie.objects.create(
+                title=title,
+                original=original,
+                genre=genres,
+                keywords=keywords,
+                country=country,
+                date=timestamp,
+                rating=rating,
+                director=director,
+                image=image,
+                actors=actors,
+                description=description
+            )
+        except:
+            continue
 
-move_to_db('movies_data.csv')
+def run():
+    move_to_db('scripts/movies_data.csv')

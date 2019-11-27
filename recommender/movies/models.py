@@ -13,6 +13,8 @@ class Movie(models.Model):
     actors = models.TextField()
     rating = models.FloatField()
     genre = models.TextField()
+    keywords = models.TextField(default="None")
+    country = models.CharField(max_length=200)
 
     def __str__(self):
         return self.title
