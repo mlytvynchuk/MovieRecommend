@@ -2,7 +2,28 @@
 {%load static%}
 {%block head%}
 <link rel="stylesheet" href={% static 'css/details.css' %}>
+
 {% endblock head%}
+
+{% block scripts %}
+  <script>
+    $(document).ready(function(){
+          var button = $('.load-simulars');
+          var lol = "yes"
+          $.ajax({
+          url: button.attr('data-url'),
+          success: function(json){
+            console.log(json)
+          $('.loader').hide();
+          $('.simulars-content').html(json['data']);
+          }
+          });
+    });
+  </script>
+{% endblock scripts %}
+
+
+
 {% block content %}
               <div class="container bg-white">
                   <div class="movie-alldescription">
@@ -41,24 +62,19 @@
                               </ul>
                           </div>
                       </div>
+                      
                       <div class="movie-data">
                         <h4>Про фільм "{{movie.title}}":</h4>
                           <p>
                             {{movie.description}}
                           </p>
                         </div>
-                <div class="simular-movies">
-                    <h4>Cхожі фільми:</h4>
-                    <div class="movie-wrapper">
-                        <div class="movie-box">
-                            <img src="img/1.jpg" alt="img">
+                        <button hidden data-url={% url 'find_simulars' movie.pk %} class="load-simulars"></button>
+                        <div class="simular-movies">
+                            <h4>Cхожі фільми:</h4>
+                            <div class="loader"></div>
+                        <div class="simulars-content">
                         </div>
-                        <div class="movie-box">
-                            <img src="img/1.jpg" alt="img">
                         </div>
-                        <div class="movie-box">
-                            <img src="img/1.jpg" alt="img">
-                        </div>
-                </div>
-                </div>
+                        
 {% endblock content %}

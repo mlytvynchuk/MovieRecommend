@@ -1,0 +1,12 @@
+
+    <div class="movie-wrapper">
+            {% for movie in simular_movies %}
+            <div class="movie-box">
+                    <a href={{movie.id}}>
+                    <img src={{movie.image}} alt="img">
+                      </a>
+                </div>
+            {% empty %}
+            <p>На сайті поки нема схожих матеріалів</p>
+            {% endfor %}
+    </div>
