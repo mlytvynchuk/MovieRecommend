@@ -2,7 +2,10 @@
 {% load static %}
 {%block content %}
       <section class="movie-section">
-            <h2 class="section-title">Найпопулярніші</h2>
+          <div class="d-flex justify-content-between">
+              <h2 class="section-title">Популярні новинки</h2>
+              <a href="/genre/new" class="btn btn-danger btn-all" style="margin-right:15px">Дивитись всі</a>
+          </div>
             <div class="movie-wrapper">
             {% for movie in movies %}
             <div class="movie-box">
@@ -18,18 +21,40 @@
       </section>
             
       <section class="movie-section">
+        <div class="d-flex justify-content-between">
             <h2 class="section-title">Комедії</h2>
-            <div class="movie-wrapper">
-              <div class="movie-box">
-                  <img src={% static 'img/1.jpg' %} alt="img">
-              </div>
-              <div class="movie-box">
-                  <img src={% static 'img/1.jpg' %} alt="img">
-              </div>
-              <div class="movie-box">
-                  <img src={% static 'img/1.jpg' %} alt="img">
-              </div>
-          </div>
+            <a href="/genre/комедия" class="btn btn-danger btn-all" style="margin-right:15px">Дивитись всі</a>
+        </div>
+        
+        <div class="movie-wrapper">
+        {% for movie in commedies %}
+        <div class="movie-box">
+            <a href={{movie.id}}>
+            <img src={{movie.image}} alt="img">
+              </a>
+        </div>
+        {%endfor%}
+          
+          
+      </div>
+  
+  </section>
+  <section class="movie-section">
+      <div class="d-flex justify-content-between">
+          <h2 class="section-title">Драми</h2>
+          <a href="/genre/драма" class="btn btn-danger btn-all" style="margin-right:15px">Дивитись всі</a>
+      </div>
+    <div class="movie-wrapper">
+    {% for movie in dramas %}
+    <div class="movie-box">
+        <a href={{movie.id}}>
+        <img src={{movie.image}} alt="img">
+          </a>
+    </div>
+    {%endfor%}
       
-      </section>
+      
+  </div>
+
+</section>
 {% endblock content%}

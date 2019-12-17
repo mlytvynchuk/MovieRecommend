@@ -1,0 +1,18 @@
+{% extends "main.html" %}
+% load endless %}
+{% load static %}
+{%block content %}
+      <section class="movie-section">
+              <h2 class="section-title">{{genre}}</h2>
+            <div class="movie-wrapper">
+
+            {% for movie in movies %}
+            <div class="movie-box">
+                <a href={{movie.id}}>
+                <img src={{movie.image}} alt="img">
+                  </a>
+            </div>
+            {%endfor%}      
+          </div>  
+      </section>
+{% endblock content%}

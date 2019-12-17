@@ -8,8 +8,8 @@
 }
 .movie-box{
     margin: 5px;
-    width: 200px;
-    height:300px;
+    width: 180px;
+    height:280px;
     /* border: 3px black solid; */
     
 }
@@ -28,6 +28,8 @@ body{
 }
 .movie-section{
     padding-top:25px;
+    margin:20px;
+    margin-right:130px;
 }
 @media(max-width: 400px){
     .movie-wrapper{
@@ -58,3 +60,4 @@ body{
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+

@@ -10,12 +10,18 @@ import pandas as pd
 from django.template.context import RequestContext
 from django.http import Http404, JsonResponse
 from django.template.loader import render_to_string
+import json
+from django.http import Http404, HttpResponse
+from infinite_scroll_pagination import paginator
+from infinite_scroll_pagination import serializers
 
 
 def index(request):
     if request.method == "GET":
-        movies = Movie.objects.filter(date=2019).order_by('-rating')[:7]
-        return render(request, 'movies/index.html', {'movies': movies})
+        movies = Movie.objects.filter(date=2019).order_by('-rating')[:8]
+        commedies = Movie.objects.filter(genre__startswith="комедия").filter(date=2019).order_by('-rating')[:8]
+        dramas = Movie.objects.filter(genre__startswith="драма").filter(date=2019).order_by('-rating')[:8]
+        return render(request, 'movies/index.html', {'movies': movies, 'commedies': commedies, 'dramas': dramas})
 
 def details(request, id):
     if request.method == "GET":
@@ -32,3 +38,12 @@ def load_simular_movies(request, id):
     rendered = render_to_string('movies/simular_movies.html',context={'simular_movies': simular_movies})
     response = {'data':rendered}
     return JsonResponse(response)
+
+
+def load_by_genre(request, genre):
+    if genre == 'new':
+        movies = Movie.objects.filter(date=2019).order_by('-rating')
+        genre = 'Новинки'
+    else:
+        movies = Movie.objects.filter(genre__startswith=genre)
+    return render(request, 'movies/by_genre.html', {'movies': movies,'genre': genre.title()} )
